@@ -1,37 +1,32 @@
-/* --------------------------------
-   1. Noto Sans KR 폰트 적용 클래스
---------------------------------- */
-.noto-sans-kr {
-  font-family: "Noto Sans KR", serif;
-  font-optical-sizing: auto;
-  font-weight: 400; /* 필요 시 700 등 다른 굵기 사용 가능 */
-  font-style: normal;
-}
-
-/* --------------------------------
-   2. 전체 화면 초기 스타일
-   (index.html에서 body 등에 margin이 없다고 가정)
---------------------------------- */
-body, html, #root {
+/* ------------------------
+   0. 공통 리셋 및 폰트
+------------------------- */
+html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #fafafa; /* 휴대폰 주위 배경색 (연한 회색) */
+  background-color: #fafafa;
   font-family: sans-serif;
 }
 
-/* React에서는 body 대신 #root 아래의 요소에 flex 적용 */
+.noto-sans-kr {
+  font-family: "Noto Sans KR", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ------------------------
+   1. 휴대폰 모형 기본
+------------------------- */
 #root {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* 전체 뷰포트 높이를 활용해 중앙 정렬 */
+  height: 100vh;
 }
 
-/* --------------------------------
-   3. 휴대폰 모형 스타일
---------------------------------- */
 .phone-container {
   display: flex;
   align-items: center;
@@ -99,5 +94,24 @@ body, html, #root {
 }
 
 .reserve-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* ----------------------------
+   4. 뒤로가기 버튼 (작게)
+---------------------------- */
+.back-btn {
+  margin-bottom: 16px;   /* 혹은 위치 조절 */
+  padding: 8px 16px;     /* 작게 조절 */
+  font-size: 0.8rem;     /* 폰트 크기 축소 */
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.back-btn:hover {
   background-color: #f0f0f0;
 }
