@@ -1,38 +1,103 @@
-.App {
-  text-align: center;
+/* --------------------------------
+   1. Noto Sans KR 폰트 적용 클래스
+--------------------------------- */
+.noto-sans-kr {
+  font-family: "Noto Sans KR", serif;
+  font-optical-sizing: auto;
+  font-weight: 400; /* 필요 시 700 등 다른 굵기 사용 가능 */
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* --------------------------------
+   2. 전체 화면 초기 스타일
+   (index.html에서 body 등에 margin이 없다고 가정)
+--------------------------------- */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa; /* 휴대폰 주위 배경색 (연한 회색) */
+  font-family: sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* React에서는 body 대신 #root 아래의 요소에 flex 적용 */
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 전체 뷰포트 높이를 활용해 중앙 정렬 */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* --------------------------------
+   3. 휴대폰 모형 스타일
+--------------------------------- */
+.phone-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;  /* 휴대폰 가로 크기 */
+  height: 600px; /* 휴대폰 세로 크기 */
+  position: relative;
+}
+
+.phone-frame {
+  width: 100%;
+  height: 100%;
+  background-color: #000;    /* 폰 외곽 검정색 */
+  border-radius: 40px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 30px;
+  background-color: #000;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  z-index: 2;
+  margin-top: 10px;
+}
+
+.phone-screen {
+  position: absolute;
+  top: 60px;  /* 노치 아래로 공간 */
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background-color: #FFFFF0; /* 아이보리색 */
+  border-radius: 30px;
+  overflow: hidden;
+
+  /* 화면 내부 콘텐츠 중앙 정렬 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* 로고 */
+.phone-logo {
+  width: 180px; /* 로고 크기 */
+  margin-bottom: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 버튼 스타일 */
+.reserve-btn {
+  padding: 16px 32px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.reserve-btn:hover {
+  background-color: #f0f0f0;
 }
