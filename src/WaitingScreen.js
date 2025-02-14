@@ -16,6 +16,19 @@ function WaitingScreen() {
     }, 1500);
   }, []);
 
+  // 로딩이 끝난 후, 5초 뒤에 자동으로 세 번째 화면으로 이동
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => {
+        navigate("/time-selection");
+      }, 2000);
+
+      // 언마운트 시 타이머 해제
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, navigate]);
+
+
   const handleGoBack = () => {
     navigate(-1);
   };
