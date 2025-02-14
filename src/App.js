@@ -6,7 +6,26 @@ function App() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate("/waiting");
+    const currentTime = new Date();
+
+    // fetch('/api/time', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ time: currentTime }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.group('서버 응답: ', data);
+
+    //     navigate("/waiting");
+    //   })
+    //   .catch((error) => {
+    //     console.error('에러 발생:', error);
+    //   });
+
+      navigate("/waiting");
   };
 
   return (
