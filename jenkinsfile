@@ -1,10 +1,15 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "npm"
+    }
+
     environment {
-        // Docker 이미지 이름과 태그를 지정합니다.
-        IMAGE_NAME = "my-react-app"
-        IMAGE_TAG  = "latest"
+        // 796973504685 는 AWS 계정 ID
+        ECR_REGISTRY = "796973504685.dkr.ecr.ap-northeast-2.amazonaws.com"
+        ECR_REPOSITORY = "olive-young-fe"
+        IMAGE_TAG = "latest"
     }
 
     stages {
@@ -14,40 +19,65 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build Docker Image') {
+
+        stage('Install') {
             steps {
                 script {
-                    // 제공된 Dockerfile을 이용해 멀티 스테이지 빌드를 수행합니다.
-                    dockerImage = docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
+                    sh 'npm install'
                 }
-            }
+             }
         }
+
         stage('Test') {
             steps {
                 script {
-                    // 필요시, 컨테이너 내부에서 테스트를 실행합니다.
-                    // Dockerfile 내 npm test 명령이 주석처리 되어 있으므로, 
-                    // 테스트가 필요하면 해당 부분을 활성화하세요.
-                    dockerImage.inside {
-                        sh 'npm test'
+                    // 단위테스트, 통합테스트 등을 수행
+                    sh "npm run test"
+                }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    sh "npm run build"
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // 현재 디렉토리에 있는 Dockerfile을 사용해 Docker 이미지 빌드
+                    // Jenkins 워크스페이스 내에서 docker build를 수행합니다.
+                    def ecrImage = "${ECR_REGISTRY}/${ECR_REPO_NAME}:${IMAGE_TAG}"
+                    sh "docker build --cache-from=${ecrImage} -t ${ecrImage} ."
+                }
+            }
+        }
+
+        stage('Push to ECR') {
+            steps {
+                script {
+                    def ecrImage = "${ECR_REGISTRY}/${ECR_REPO_NAME}:${IMAGE_TAG}"
+                    sh "docker push ${ecrImage}"
                     }
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                script {
-                    // EC2 또는 원하는 환경에 컨테이너를 실행합니다.
-                    // 여기서는 예시로 로컬에서 포트 80으로 실행합니다.
-                    sh "docker run -d -p 80:80 ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
-                }
-            }
-        }
     }
-
+    
     post {
         always {
-            echo 'Pipeline 실행 완료.'
+            sh "docker logout ${ECR_REGISTRY}"
+
+            echo "Pipeline이 종료되었습니다."
+        }
+        success {
+            echo "성공적으로 빌드 및 푸시를 완료했습니다."
+        }
+        failure {
+            echo "파이프라인 실행에 실패했습니다."
         }
     }
 }
