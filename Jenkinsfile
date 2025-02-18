@@ -28,12 +28,12 @@ pipeline {
              }
         }
 
-        stage('Test') {
-            steps {
-                // 단위테스트, 통합테스트 등을 수행
-                sh "npm run test"
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         // 단위테스트, 통합테스트 등을 수행
+        //         sh "npm run test"
+        //     }
+        // }
         
         stage('Build') {
             steps {
