@@ -6,7 +6,7 @@ function App() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    const currentTime = new Date();
+    // const currentTime = new Date();
 
     // fetch('/api/time', {
     //   method: 'POST',
