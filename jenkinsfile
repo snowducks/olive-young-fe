@@ -10,6 +10,8 @@ pipeline {
         ECR_REGISTRY = "796973504685.dkr.ecr.ap-northeast-2.amazonaws.com"
         ECR_REPOSITORY = "olive-young-fe"
         IMAGE_TAG = "latest"
+        AWS_REGION = "ap-northeast-2"
+        AWS_ACCOUNT_ID = "796973504685"
     }
 
     stages {
@@ -56,11 +58,21 @@ pipeline {
             }
         }
 
+        stage('Login to AWS ECR') {
+            steps {
+                script {
+                    withAWS(credentials: ECR_CREDENTIALS, region: AWS_REGION) {
+                        sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
+                    }
+                }
+            }
+        }
+
         stage('Push to ECR') {
             steps {
                 script {
-                    def ecrImage = "${ECR_REGISTRY}/${ECR_REPO_NAME}:${IMAGE_TAG}"
-                    sh "docker push ${ecrImage}"
+                        def ecrImage = "${ECR_REGISTRY}/${ECR_REPO_NAME}:${IMAGE_TAG}"
+                        sh "docker push ${ecrImage}"
                     }
                 }
             }
