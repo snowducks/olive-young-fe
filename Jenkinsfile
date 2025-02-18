@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "npm"
+    }
+
     environment {
         // 796973504685 는 AWS 계정 ID
         ECR_REGISTRY = "796973504685.dkr.ecr.ap-northeast-2.amazonaws.com"
