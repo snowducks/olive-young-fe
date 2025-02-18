@@ -24,18 +24,14 @@ pipeline {
 
         stage('Install') {
             steps {
-                script {
-                    sh 'npm install'
-                }
+                sh 'npm install'
              }
         }
 
         stage('Test') {
             steps {
-                script {
-                    // 단위테스트, 통합테스트 등을 수행
-                    sh "npm run test"
-                }
+                // 단위테스트, 통합테스트 등을 수행
+                sh "npm run test"
             }
         }
         
