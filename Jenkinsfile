@@ -8,7 +8,7 @@ pipeline {
     environment {
         // 796973504685 는 AWS 계정 ID
         ECR_REGISTRY = "796973504685.dkr.ecr.ap-northeast-2.amazonaws.com"
-        ECR_REPO_NAME = "olive-young-fe"
+        ECR_REPO_NAME = "server/olive-young-fe"
         ECR_CREDENTIALS = "aws-ecr-credential"
         IMAGE_TAG = "latest"
         AWS_REGION = "ap-northeast-2"
