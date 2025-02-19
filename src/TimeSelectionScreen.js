@@ -44,17 +44,10 @@ function TimeSelectionScreen() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {times.map((hour) => (
                 <button
-                  key={hour}
-                  style={{
-                    padding: "8px 16px",
-                    fontSize: "1rem",
-                    borderRadius: "8px",
-                    border: selectedTime === hour ? "2px solid #333" : "1px solid #ccc",
-                    backgroundColor: "#fff",
-                    cursor: "pointer"
-                  }}
-                  onClick={() => handleTimeClick(hour)}
-                >
+                key={hour}
+                className={`time-button ${selectedTime === hour ? "selected" : ""}`}
+                onClick={() => handleTimeClick(hour)}
+              >
                   {hour}시
                 </button>
               ))}
