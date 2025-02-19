@@ -1,5 +1,4 @@
-# Continuous Integration 
-# base image 설정(as build 로 완료된 파일을 밑에서 사용할 수 있다.)
+# Node.js를 사용하여 빌드
 FROM node:22-alpine as build-stage
 
 # 컨테이너 내부 작업 디렉토리 설정
@@ -20,6 +19,7 @@ RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/build /usr/share/nginx/html
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
