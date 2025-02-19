@@ -115,14 +115,14 @@ function TimeSelectionScreen() {
           {/* 중앙 영역: 시간 선택 버튼 + 예매 완료 버튼 */}
           <div className="center-content noto-sans-kr">
             {/* 시간 버튼 목록 */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div style={{ maxHeight: "300px", overflowY: "auto", marginBottom: "20px", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }} >
               {times.map((hour) => (
                 <button
                 key={hour}
                 className={`time-button ${selectedTime === hour ? "selected" : ""}`}
                 onClick={() => handleTimeClick(hour)}
               >
-                  {hour}시
+                  {hour}
                 </button>
               ))}
             </div>
