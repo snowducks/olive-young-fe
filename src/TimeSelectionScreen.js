@@ -15,7 +15,7 @@ function TimeSelectionScreen() {
     setSelectedTime(time);
   };
 
-  const handleComplete = () => {
+  const handleBooking = () => {
 
     if (selectedTime === null) {
       alert("시간을 선택해주세요!");
@@ -82,7 +82,7 @@ function TimeSelectionScreen() {
             <button
               className="reserve-btn"
               style={{ marginTop: "20px" }}
-              onClick={handleComplete}
+              onClick={handleBooking}
             >
               예매 완료
             </button>
