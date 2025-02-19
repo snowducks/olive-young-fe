@@ -1,22 +1,15 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function(app) {
-  // REST API 요청: /tickets로 시작하는 요청은 8083 포트로 전달
+module.exports = function (app) {
   app.use(
-    '/tickets',
+    "/api",
     createProxyMiddleware({
-      target: 'http://localhost:8083',
+      target: "http://localhost:8083", // 백엔드 서버 주소
       changeOrigin: true,
+      pathRewrite: {
+        "^/api": "", // /api/request -> http://localhost:8083/request
+      },
     })
   );
 
-  // WebSocket 연결: /ws 경로로 들어오는 WebSocket 요청은 8084 포트로 전달
-  app.use(
-    '/websocket',
-    createProxyMiddleware({
-      target: 'ws://localhost:8084',
-      ws: true, // WebSocket 프록시 활성화
-      changeOrigin: true,
-    })
-  );
 };

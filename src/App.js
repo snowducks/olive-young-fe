@@ -5,28 +5,25 @@ import "./App.css";
 function App() {
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
-
-    fetch('/tickets/request', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ timestamp: new Date(), eventId: 1}),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('서버 오류 발생');
-        }
-        return response.text(); // 또는 JSON 데이터가 있다면 .json()
-      })
-      .then((data) => {
-        console.group('서버 응답: ', data);
-        navigate("/waiting");
-      })
-      .catch((error) => {
-        console.error('에러 발생:', error);
+  const handleButtonClick = async () => {
+    try {
+      const response = await fetch("/api/tickets/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ticketType: "standard" }), // 예시 데이터
+        credentials: "include", // 쿠키를 포함하여 요청
       });
+
+      if (response.ok) {
+        navigate("/waiting");
+      } else {
+        console.error("Failed to send request");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
