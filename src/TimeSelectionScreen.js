@@ -16,13 +16,34 @@ function TimeSelectionScreen() {
   };
 
   const handleComplete = () => {
+    const currentTime = new Date();
+    const eventId = 1;
+    
     if (selectedTime === null) {
       alert("시간을 선택해주세요!");
       return;
     }
-    // 선택한 시간이 있다면, 네 번째 화면으로 이동
-    navigate("/receipt");
+
+    fetch('/tickets/booking', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ time: currentTime, eventId: 1, timeSlot: selectedTime}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.group('서버 응답: ', data);
+            // 선택한 시간이 있다면, 네 번째 화면으로 이동
+        navigate("/receipt");
+
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error);
+      });
   };
+
+  
 
   return (
     <div className="phone-container">
