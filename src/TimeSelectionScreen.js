@@ -86,9 +86,9 @@ function TimeSelectionScreen() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ 
-        time: new Date(), 
+        timestamp: new Date(), 
         eventId: 1, 
-        timeSlot: selectedTime
+        timeSlot: selectedTime,
       }),
     })
       .then((response) => {

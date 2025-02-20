@@ -14,7 +14,7 @@ function App() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ticketType: "standard" }), // 예시 데이터
+        body: JSON.stringify({ timestamp: new Date(), eventId: 1 }), // 예시 데이터
         credentials: "include", // 쿠키를 포함하여 요청
       });
 
