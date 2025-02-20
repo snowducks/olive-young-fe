@@ -9,6 +9,7 @@ function TimeSelectionScreen() {
   const [availability, setAvailability] = useState({});
 
   const ws = useRef(null);
+  const intervalRef = useRef(null); // interval 관리를 위한 ref 추가
   const API_URL = process.env.REACT_APP_API_URL;
 
   const times = [
@@ -20,16 +21,22 @@ function TimeSelectionScreen() {
   // WebSocket 연결 설정
   useEffect(() => {
     const wsUrl = process.env.REACT_APP_WS_URL;
-    // WebSocket 엔드포인트 URL (환경에 따라 수정)
-    const ws = new WebSocket(`${wsUrl}/websocket/tickets`);
+    ws.current = new WebSocket(`${wsUrl}/websocket/tickets`);
 
-    ws.onopen = () => {
+    ws.current.onopen = () => {
       console.log("WebSocket 연결됨");
-      // 연결 후 전체 타임슬롯 정보 요청
-      ws.send("ALL_TIMESLOTS");
+      // 최초 연결 시 즉시 요청
+      // ws.current.send("ALL_TIMESLOTS");
+
+      // 주기적으로 
+      intervalRef.current = setInterval(() => {
+        if (ws.current.readyState === WebSocket.OPEN) {
+          ws.current.send("ALL_TIMESLOTS");
+        }
+      }, 1000); // 5초 간격
     };
 
-    ws.onmessage = (event) => {
+    ws.current.onmessage = (event) => {
       console.log("WebSocket 메시지 수신:", event.data);
       
       try {
@@ -43,7 +50,7 @@ function TimeSelectionScreen() {
       }
     };
 
-    ws.onerror = (error) => {
+    ws.current.onerror = (error) => {
       console.error("WebSocket 에러:", error);
     };
 
@@ -63,7 +70,7 @@ function TimeSelectionScreen() {
       alert("시간을 선택해주세요!");
       return;
     }
-
+    if (intervalRef.current) clearInterval(intervalRef.current);
     if (ws.current) {
       ws.current.close();
       console.log("WebSocket 종료됨");
