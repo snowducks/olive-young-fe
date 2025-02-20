@@ -8,7 +8,6 @@ function TimeSelectionScreen() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [availability, setAvailability] = useState({});
 
-  const wsUrl = process.env.REACT_APP_WS_URL;
   const ws = useRef(null);
 
   const times = [
@@ -19,6 +18,7 @@ function TimeSelectionScreen() {
 
   // WebSocket 연결 설정
   useEffect(() => {
+    const wsUrl = process.env.REACT_APP_WS_URL;
     // WebSocket 엔드포인트 URL (환경에 따라 수정)
     const ws = new WebSocket(`${wsUrl}/websocket/tickets`);
 

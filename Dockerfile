@@ -14,7 +14,6 @@ RUN npm install
 
 
 # WebSocket 서버 주소
-
 ENV REACT_APP_API_URL = http://localhost:8083
 ENV REACT_APP_WS_URL = ws://localhost:8084
 
