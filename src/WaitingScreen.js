@@ -25,7 +25,7 @@ function WaitingScreen() {
       if (cookies.uuid) {
         intervalRef.current = setInterval(() => {
         if (ws.current.readyState === WebSocket.OPEN) {
-          ws.current.send("ALL_TIMESLOTS");
+          ws.current.send(cookies.uuid);
         }
       }, 1000); // 1초 간격
       } else {
