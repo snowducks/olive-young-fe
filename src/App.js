@@ -5,9 +5,11 @@ import "./App.css";
 function App() {
   const navigate = useNavigate();
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   const handleButtonClick = async () => {
     try {
-      const response = await fetch("/api/tickets/request", {
+      const response = await fetch(`${API_URL}/tickets/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
