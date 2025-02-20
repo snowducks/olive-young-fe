@@ -37,16 +37,16 @@ function WaitingScreen() {
       console.log("서버로부터 메시지 수신:", event.data);
       try {
         const data = JSON.parse(event.data);
-        // waitingOrder 값 업데이트
-        if (data.waitingOrder !== undefined) {
-          setWaitingCount(data.waitingOrder);
-          setIsLoading(false);
-        }
         // 입장 가능 여부가 true이면 해당 경로로 이동
         if (data.canEnter === true) {
           clearInterval(intervalRef.current);
           ws.current.close();
           navigate("/time-selection");
+        }
+        // waitingOrder 값 업데이트
+        if (data.waitingOrder !== undefined) {
+          setWaitingCount(data.waitingOrder);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error("메시지 파싱 오류:", error);
