@@ -1,13 +1,13 @@
 // src/TimeSelectionScreen.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 function TimeSelectionScreen() {
   const navigate = useNavigate();
-
   const [selectedTime, setSelectedTime] = useState(null);
   const [availability, setAvailability] = useState({});
+  const ws = useRef(null);
 
   const times = [
     "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
@@ -15,45 +15,35 @@ function TimeSelectionScreen() {
     "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"
   ];
 
+  // WebSocket 연결 설정
   useEffect(() => {
-    // WebSocket 연결 (프록시 설정을 통해 실제로는 ws://localhost:8084로 전달됨)
-    const socket = new WebSocket('ws://localhost:8084/websocket/tickets');
+    // WebSocket 엔드포인트 URL (환경에 따라 수정)
+    const ws = new WebSocket("ws://localhost:8084/websocket/tickets");
 
-    socket.onopen = () => {
-      console.log("WebSocket 연결 성공");
-      // 전체 타임슬롯 상태 요청
-      socket.send("ALL_TIMESLOTS");
+    ws.onopen = () => {
+      console.log("WebSocket 연결됨");
+      // 연결 후 전체 타임슬롯 정보 요청
+      ws.send("ALL_TIMESLOTS");
     };
 
-    socket.onmessage = (event) => {
+    ws.onmessage = (event) => {
       console.log("WebSocket 메시지 수신:", event.data);
+      
       try {
-        const message = JSON.parse(event.data);
-
-        if (message.type === "all_ticket_status") {
-          const data = message.data; // 예: { "09:00": 45, "09:30": 0, ... }
-
-          // 잔여 티켓이 0보다 크면 사용 가능(true), 아니면 불가능(false)
-          const newAvailability = {};
-
-          Object.keys(data).forEach((timeSlot) => {
-            newAvailability[timeSlot] = data[timeSlot] > 0;
-          });
-          setAvailability(newAvailability);
+        const msg = JSON.parse(event.data);
+        if (msg.type === "all_ticket_status" && msg.data) {
+          // 서버에서 전달한 잔여 티켓 정보를 상태에 저장
+          setAvailability(msg.data);
         }
       } catch (error) {
-        console.error("WebSocket 메시지 파싱 오류:", error);
+        console.error("메시지 파싱 오류:", error);
       }
     };
 
-    socket.onerror = (error) => {
+    ws.onerror = (error) => {
       console.error("WebSocket 에러:", error);
     };
 
-    // 컴포넌트 언마운트 시 WebSocket 연결 종료
-    return () => {
-      socket.close();
-    };
   }, []);
 
   const handleTimeClick = (time) => {
@@ -61,14 +51,19 @@ function TimeSelectionScreen() {
     if (availability[time] === false) {
       return;
     }
+
     setSelectedTime(time);
   };
 
   const handleBooking = () => {
-
     if (selectedTime === null) {
       alert("시간을 선택해주세요!");
       return;
+    }
+
+    if (ws.current) {
+      ws.current.close();
+      console.log("WebSocket 종료됨");
     }
 
     fetch('/api/tickets/booking', {
