@@ -9,6 +9,7 @@ function TimeSelectionScreen() {
   const [availability, setAvailability] = useState({});
 
   const ws = useRef(null);
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const times = [
     "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
@@ -68,7 +69,7 @@ function TimeSelectionScreen() {
       console.log("WebSocket 종료됨");
     }
 
-    fetch('/api/tickets/booking', {
+    fetch(`${API_URL}/tickets/booking`, {
       method: 'POST',
       credentials: 'include',
       headers: {
