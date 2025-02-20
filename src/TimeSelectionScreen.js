@@ -70,7 +70,10 @@ function TimeSelectionScreen() {
       alert("시간을 선택해주세요!");
       return;
     }
-    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
     if (ws.current) {
       ws.current.close();
       console.log("WebSocket 종료됨");
