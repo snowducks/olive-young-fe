@@ -33,7 +33,7 @@ function TimeSelectionScreen() {
         if (ws.current.readyState === WebSocket.OPEN) {
           ws.current.send("ALL_TIMESLOTS");
         }
-      }, 1000); // 5초 간격
+      }, 1000); // 1초 간격
     };
 
     ws.current.onmessage = (event) => {

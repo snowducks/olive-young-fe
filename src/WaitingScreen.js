@@ -1,33 +1,73 @@
 // src/WaitingScreen.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import "./App.css";
 
 function WaitingScreen() {
   const navigate = useNavigate();
   const [waitingCount, setWaitingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [cookies] = useCookies(['uuid']); // 쿠키 훅 사용
+
+  
+  const ws = useRef(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    // 실제 백엔드 연동 대신 데모용 타이머
-    setTimeout(() => {
-      setWaitingCount(12345);
-      setIsLoading(false);
-    }, 1500);
-  }, []);
+    const wsUrl = process.env.REACT_APP_WS_URL;
+    ws.current = new WebSocket(`${wsUrl}/websocket/queue`);
 
-  // 로딩이 끝난 후, 5초 뒤에 자동으로 세 번째 화면으로 이동
-  useEffect(() => {
-    if (!isLoading) {
-      const timer = setTimeout(() => {
-        navigate("/time-selection");
-      }, 2000);
+    ws.current.onopen = () => {
+      console.log("WebSocket 연결됨");
+      // 쿠키에 담긴 uuid 전송
+      console.log("uuid cookie : ", cookies.uuid);
+      if (cookies.uuid) {
+        intervalRef.current = setInterval(() => {
+        if (ws.current.readyState === WebSocket.OPEN) {
+          ws.current.send("ALL_TIMESLOTS");
+        }
+      }, 1000); // 1초 간격
+      } else {
+        console.error("쿠키에 uuid가 존재하지 않습니다.");
+      }
+    };
 
-      // 언마운트 시 타이머 해제
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading, navigate]);
+    ws.current.onmessage = (event) => {
+      console.log("서버로부터 메시지 수신:", event.data);
+      try {
+        const data = JSON.parse(event.data);
+        // waitingOrder 값 업데이트
+        if (data.waitingOrder !== undefined) {
+          setWaitingCount(data.waitingOrder);
+          setIsLoading(false);
+        }
+        // 입장 가능 여부가 true이면 해당 경로로 이동
+        if (data.canEnter === true) {
+          clearInterval(intervalRef.current);
+          ws.current.close();
+          navigate("/time-selection");
+        }
+      } catch (error) {
+        console.error("메시지 파싱 오류:", error);
+      }
+    };
 
+    ws.current.onerror = (error) => {
+      console.error("WebSocket 에러:", error);
+    };
+
+    ws.current.onclose = () => {
+      console.log("WebSocket 연결 종료");
+    };
+
+    // 컴포넌트 언마운트 시 WebSocket 연결 종료
+    // return () => {
+    //   if (ws.current) {
+    //     ws.current.close();
+    //   }
+    // };
+  }, [cookies.uuid, navigate]);
 
   const handleGoBack = () => {
     navigate(-1);
