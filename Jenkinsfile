@@ -14,7 +14,6 @@ pipeline {
         AWS_REGION = "ap-northeast-2"
         AWS_ACCOUNT_ID = "796973504685"
 
-        SQ_NAME = "sonarqube"
         SQ_PROJECT_KEY = 'sonarqube-project-key-fe'
         SQ_COVERAGE_PATH = "coverage/lcov.info"
         SQ_EXCLUSIONS = "node+modules/**,build/**"
@@ -44,7 +43,10 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv("${env.SQ_NAME}") {
+                script{
+                    scannerHome = tool 'sonarqube-scanner';
+                }
+                withSonarQubeEnv('sonarqube') {
                     // 프로젝트 키는 Credentials에서 받아옵니다.
                     withCredentials([
                         string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
