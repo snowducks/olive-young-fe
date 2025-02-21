@@ -41,11 +41,10 @@ pipeline {
         //         sh "npm run test -- --coverage"
         //     }
         // }
-        
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('${env.SQ_NAME}') {
+                withSonarQubeEnv("${env.SQ_NAME}") {
                     // 프로젝트 키는 Credentials에서 받아옵니다.
                     withCredentials([
                         string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
