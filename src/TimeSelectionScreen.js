@@ -54,6 +54,17 @@ function TimeSelectionScreen() {
       console.error("WebSocket 에러:", error);
     };
 
+    return () => {
+      // interval 해제
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      // WebSocket 닫기
+      if (ws.current?.readyState === WebSocket.OPEN) {
+        ws.current.close();
+      }
+    };
+
   }, []);
 
   const handleTimeClick = (time) => {
@@ -99,6 +110,7 @@ function TimeSelectionScreen() {
       })
       .then((data) => {
         console.group('서버 응답: ', data);
+        console.log(selectedTime, typeof(selectedTime));
         navigate("/receipt");
       })
       .catch((error) => {
