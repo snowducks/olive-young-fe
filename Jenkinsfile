@@ -14,7 +14,7 @@ pipeline {
         AWS_REGION = "ap-northeast-2"
         AWS_ACCOUNT_ID = "796973504685"
 
-        SQ_CREDENTIAL = 'sonarqube-credential'
+        SQ_CREDENTIAL = 'sonarqube-credential-fe'
         SQ_PROJECT_KEY = 'sonarqube-project-key-fe'
         SQ_COVERAGE_PATH = "coverage/lcov.info"
         SQ_EXCLUSIONS = "node_modules/**,build/**"
@@ -53,15 +53,12 @@ pipeline {
                         string(credentialsId: "${env.SQ_CREDENTIAL}", variable: 'SQ_LOGIN')
                     ]) {
                         sh """
-                        ${scannerHome}/bin/sonar-scanner \
+                            ${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=${PROJECT_KEY} \
                             -Dsonar.projectName=${PROJECT_KEY} \
                             -Dsonar.sources=src \
                             -Dsonar.exclusions=${env.SQ_EXCLUSIONS} \
                             -Dsonar.sourceEncoding=UTF-8 \
-                            -Dsonar.login=${SQ_LOGIN} \
-                            -Dsonar.host.url=${env.SQ_HOST_URL} \
-                            -Dsonar.javascript.lcov.reportPaths=${env.SQ_COVERAGE_PATH}
                         """
                     }
                 }
