@@ -47,10 +47,9 @@ pipeline {
                 script{
                     scannerHome = tool 'sonarqube-scanner';
                 }
-                withSonarQubeEnv('sonarqube') {
+                withSonarQubeEnv(credentialsId: "${env.SQ_CREDENTIAL}", installationName: 'sonarqube') {
                     withCredentials([
-                        string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY'),
-                        string(credentialsId: "${env.SQ_CREDENTIAL}", variable: 'SQ_LOGIN')
+                        string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
                     ]) {
                         sh """
                             ${scannerHome}/bin/sonar-scanner \
