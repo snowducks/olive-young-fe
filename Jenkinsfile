@@ -47,7 +47,7 @@ pipeline {
                 script{
                     scannerHome = tool 'sonarqube-scanner';
                 }
-                withSonarQubeEnv(credentialsId: "${env.SQ_CREDENTIAL}", installationName: 'sonarqube') {
+                withSonarQubeEnv(credentialsId: "${env.SQ_CREDENTIAL}", installationName: 'sonarqube2') {
                     withCredentials([
                         string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
                     ]) {
