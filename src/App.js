@@ -5,7 +5,7 @@ import "./App.css";
 
 function App() {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['uuid']);
+  const [cookies] = useCookies(['uuid']);
 
   const API_URL = process.env.REACT_APP_API_URL;
 
