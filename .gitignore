@@ -2,6 +2,7 @@
 
 .env
 jenkins-test.pem
+dev-key.pem
 
 # dependencies
 /node_modules
