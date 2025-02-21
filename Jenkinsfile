@@ -49,7 +49,7 @@ pipeline {
                 }
                 withSonarQubeEnv('sonarqube') {
                     withCredentials([
-                        string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
+                        string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY'),
                         string(credentialsId: "${env.SQ_CREDENTIAL}", variable: 'SQ_LOGIN')
                     ]) {
                         sh """
