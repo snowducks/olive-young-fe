@@ -61,12 +61,19 @@ function WaitingScreen() {
       console.log("WebSocket 연결 종료");
     };
 
-    // 컴포넌트 언마운트 시 WebSocket 연결 종료
-    // return () => {
-    //   if (ws.current) {
-    //     ws.current.close();
-    //   }
-    // };
+
+    // ★ 중요: cleanup 함수
+    return () => {
+      // interval 정리
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      // WebSocket 정리
+      if (ws.current?.readyState === WebSocket.OPEN) {
+        ws.current.close();
+        console.log("WebSocket 연결 종료");
+      }
+    };
   }, [cookies.uuid, navigate]);
 
   const handleGoBack = () => {
