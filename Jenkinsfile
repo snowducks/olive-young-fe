@@ -8,11 +8,17 @@ pipeline {
     environment {
         // 796973504685 는 AWS 계정 ID
         ECR_REGISTRY = "796973504685.dkr.ecr.ap-northeast-2.amazonaws.com"
-        ECR_REPO_NAME = "dev-ecr"
+        ECR_REPO_NAME = "server/olive-young-fe"
         ECR_CREDENTIALS = "aws-ecr-credential"
         IMAGE_TAG = "latest"
         AWS_REGION = "ap-northeast-2"
         AWS_ACCOUNT_ID = "796973504685"
+
+        SQ_NAME = "sonarqube"
+        SQ_PROJECT_KEY = 'sonarqube-project-key-fe'
+        SQ_COVERAGE_PATH = "coverage/lcov.info"
+        SQ_EXCLUSIONS = "node+modules/**,build/**"
+        SQ_HOST_URL = "http://http://54.180.236.125:9000"
     }
 
     stages {
@@ -32,10 +38,47 @@ pipeline {
         // stage('Test') {
         //     steps {
         //         // 단위테스트, 통합테스트 등을 수행
-        //         sh "npm run test"
+        //         sh "npm run test -- --coverage"
         //     }
         // }
         
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('${env.SQ_NAME}') {
+                    // 프로젝트 키는 Credentials에서 받아옵니다.
+                    withCredentials([
+                        string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
+                    ]) {
+                        sh """
+                        sonar-scanner \
+                            -Dsonar.projectKey=${PROJECT_KEY} \
+                            -Dsonar.projectName=${PROJECT_KEY} \
+                            -Dsonar.sources=src \
+                            -Dsonar.exclusions=${env.SQ_EXCLUSIONS} \
+                            -Dsonar.sourceEncoding=UTF-8 \
+                            -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+                            -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                            -Dsonar.javascript.lcov.reportPaths=${env.SQ_COVERAGE_PATH}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('SonarQube Quality Gate') {
+            steps {
+                script {
+                    def qualityGate = waitForQualityGate()
+                    if (qualityGate.status != 'OK') {
+                        error "SonarQube Quality Gate에 통과하지 못했습니다: ${qualityGate.status}"
+                    } else {
+                        echo "SonarQube Quality Gate 통과"
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
