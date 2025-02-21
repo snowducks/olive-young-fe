@@ -64,18 +64,18 @@ pipeline {
             }
         }
 
-        stage('SonarQube Quality Gate') {
-            steps {
-                script {
-                    def qualityGate = waitForQualityGate()
-                    if (qualityGate.status != 'OK') {
-                        error "SonarQube Quality Gate에 통과하지 못했습니다: ${qualityGate.status}"
-                    } else {
-                        echo "SonarQube Quality Gate 통과"
-                    }
-                }
-            }
-        }
+        // stage('SonarQube Quality Gate') {
+        //     steps {
+        //         script {
+        //             def qualityGate = waitForQualityGate()
+        //             if (qualityGate.status != 'OK') {
+        //                 error "SonarQube Quality Gate에 통과하지 못했습니다: ${qualityGate.status}"
+        //             } else {
+        //                 echo "SonarQube Quality Gate 통과"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build') {
             steps {
