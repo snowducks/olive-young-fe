@@ -14,10 +14,11 @@ pipeline {
         AWS_REGION = "ap-northeast-2"
         AWS_ACCOUNT_ID = "796973504685"
 
+        SQ_CREDENTIAL = 'sonarqube-credential'
         SQ_PROJECT_KEY = 'sonarqube-project-key-fe'
         SQ_COVERAGE_PATH = "coverage/lcov.info"
-        SQ_EXCLUSIONS = "node+modules/**,build/**"
-        SQ_HOST_URL = "http://http://54.180.236.125:9000"
+        SQ_EXCLUSIONS = "node_modules/**,build/**"
+        SQ_HOST_URL = "http://54.180.236.125:9000"
     }
 
     stages {
@@ -47,19 +48,19 @@ pipeline {
                     scannerHome = tool 'sonarqube-scanner';
                 }
                 withSonarQubeEnv('sonarqube') {
-                    // 프로젝트 키는 Credentials에서 받아옵니다.
                     withCredentials([
                         string(credentialsId: "${env.SQ_PROJECT_KEY}", variable: 'PROJECT_KEY')
+                        string(credentialsId: "${env.SQ_CREDENTIAL}", variable: 'SQ_LOGIN')
                     ]) {
                         sh """
-                        sonar-scanner \
+                        ${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=${PROJECT_KEY} \
                             -Dsonar.projectName=${PROJECT_KEY} \
                             -Dsonar.sources=src \
                             -Dsonar.exclusions=${env.SQ_EXCLUSIONS} \
                             -Dsonar.sourceEncoding=UTF-8 \
-                            -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
-                            -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                            -Dsonar.login=${SQ_LOGIN} \
+                            -Dsonar.host.url=${env.SQ_HOST_URL} \
                             -Dsonar.javascript.lcov.reportPaths=${env.SQ_COVERAGE_PATH}
                         """
                     }
@@ -123,7 +124,6 @@ pipeline {
     post {
         always {
             sh "docker logout ${ECR_REGISTRY}"
-
             echo "Pipeline이 종료되었습니다."
         }
         success {
