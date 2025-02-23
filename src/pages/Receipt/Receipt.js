@@ -1,7 +1,7 @@
 // src/Receipt.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
+import "../Main/Main.css";
 
 function Receipt() {
   const navigate = useNavigate();
