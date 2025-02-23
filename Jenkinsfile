@@ -14,11 +14,11 @@ pipeline {
         AWS_REGION = "ap-northeast-2"
         AWS_ACCOUNT_ID = "796973504685"
 
-        SQ_CREDENTIAL = 'sonarqube-credential-fe'
-        SQ_PROJECT_KEY = 'sonarqube-project-key-fe'
+        SQ_CREDENTIAL = 'sonarqube-credential'
+        SQ_PROJECT_KEY = 'sq-fe-project-key'
         SQ_COVERAGE_PATH = "coverage/lcov.info"
         SQ_EXCLUSIONS = "node_modules/**,build/**"
-        SQ_HOST_URL = "http://54.180.236.125:9000"
+        SQ_HOST_URL = "http://localhost:9000"
     }
 
     stages {
