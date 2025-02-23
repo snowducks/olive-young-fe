@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "../Main/Main.css";
+import "./WaitingScreen.css";
 
 function WaitingScreen() {
   const navigate = useNavigate();
