@@ -84,12 +84,6 @@ function WaitingScreen() {
 
   return (
     <PhoneFrame>
-      {/* 로고 (상단) */}
-      <img
-        src="/images/olive_young_logo.png"
-        className="phone-logo"
-        alt="Olive Young Logo"
-      />
       {/* 가운데 문구 */}
       <div className="center-content">
         {isLoading ? (
