@@ -1,5 +1,4 @@
-# Continuous Integration 
-# base image 설정(as build 로 완료된 파일을 밑에서 사용할 수 있다.)
+# Node.js를 사용하여 빌드
 FROM node:22-alpine as build-stage
 
 # 컨테이너 내부 작업 디렉토리 설정
@@ -11,6 +10,12 @@ COPY package*.json ./
 
 # package.json 및 package-lock.json 파일에 명시된 의존성 패키지들을 설치
 RUN npm install
+# 백엔드 REST API 주소
+
+
+# WebSocket 서버 주소
+ENV REACT_APP_API_URL = http://localhost:8083
+ENV REACT_APP_WS_URL = ws://localhost:8084
 
 # 호스트 머신의 현재 디렉토리 파일들을 컨테이너 내부로 전부 복사
 COPY . .
@@ -20,6 +25,7 @@ RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/build /usr/share/nginx/html
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 

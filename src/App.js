@@ -1,53 +1,22 @@
+// src/App.js
 import React from "react";
-import { useNavigate } from "react-router-dom"; // ★ 라우터 훅
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Main from "./pages/Main/Main";                     // 첫 번째 화면(이전 App.js 역할)
+import WaitingScreen from "./pages/Waiting/WaitingScreen";   // 두 번째 화면
+import TimeSelectionScreen from "./pages/TimeSelection/TimeSelectionScreen"; // 세 번째 화면
+import Receipt from "./pages/Receipt/Receipt";               // 네 번째 화면
 
 function App() {
-  const navigate = useNavigate();
-
-  const handleButtonClick = () => {
-    const currentTime = new Date();
-
-    // fetch('/api/time', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ time: currentTime }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.group('서버 응답: ', data);
-
-    //     navigate("/waiting");
-    //   })
-    //   .catch((error) => {
-    //     console.error('에러 발생:', error);
-    //   });
-
-      navigate("/waiting");
-  };
-
   return (
-    <div className="phone-container">
-      <div className="phone-frame">
-        <div className="notch"></div>
-        <div className="phone-screen">
-          <div className="logo-container">
-            <img
-              src="/images/olive_young_logo.png"
-              className="phone-logo"
-              alt="Olive Young Logo"
-            />
-          </div>
-          <div className="center-content">
-            <button className="reserve-btn noto-sans-kr" onClick={handleButtonClick}>
-              반짝 예매
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/waiting" element={<WaitingScreen />} />
+        <Route path="/time-selection" element={<TimeSelectionScreen />} />
+        <Route path="/receipt" element={<Receipt />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
