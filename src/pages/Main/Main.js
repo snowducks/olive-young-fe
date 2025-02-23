@@ -44,8 +44,6 @@ function Main() {
 
   return (
     <PhoneFrame>
-      <div className="logo-container">
-      </div>
       <div className="center-content">
         <button
           className="reserve-btn noto-sans-kr"
