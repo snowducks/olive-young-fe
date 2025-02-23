@@ -123,13 +123,6 @@ function TimeSelectionScreen() {
   return (
     <PhoneFrame>
       {/* 로고 영역 */}
-      <div className="logo-container">
-        <img
-          src="/images/olive_young_logo.png"
-          className="phone-logo"
-          alt="Olive Young Logo"
-        />
-      </div>
 
       {/* 중앙 영역: 시간 선택 버튼 + 예매 완료 버튼 */}
       <div className="center-content noto-sans-kr">
