@@ -122,8 +122,6 @@ function TimeSelectionScreen() {
 
   return (
     <PhoneFrame>
-      {/* 로고 영역 */}
-
       {/* 중앙 영역: 시간 선택 버튼 + 예매 완료 버튼 */}
       <div className="center-content noto-sans-kr">
         {/* 시간 버튼 목록 */}
