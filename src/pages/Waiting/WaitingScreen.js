@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "../Main/Main.css";
 import "./WaitingScreen.css";
+import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function WaitingScreen() {
   const navigate = useNavigate();
@@ -82,33 +83,28 @@ function WaitingScreen() {
   };
 
   return (
-    <div className="phone-container">
-      <div className="phone-frame">
-        <div className="notch"></div>
-        <div className="phone-screen">
-          {/* 로고 (상단) */}
-          <img
-            src="/images/olive_young_logo.png"
-            className="phone-logo"
-            alt="Olive Young Logo"
-          />
-          {/* 가운데 문구 */}
-          <div className="center-content">
-            {isLoading ? (
-              <div className="noto-sans-kr loading-text">로딩중...</div>
-            ) : (
-              <div className="noto-sans-kr waiting-text">
-                {waitingCount}명이 대기중입니다.
-              </div>
-            )}
+    <PhoneFrame>
+      {/* 로고 (상단) */}
+      <img
+        src="/images/olive_young_logo.png"
+        className="phone-logo"
+        alt="Olive Young Logo"
+      />
+      {/* 가운데 문구 */}
+      <div className="center-content">
+        {isLoading ? (
+          <div className="noto-sans-kr loading-text">로딩중...</div>
+        ) : (
+          <div className="noto-sans-kr waiting-text">
+            {waitingCount}명이 대기중입니다.
           </div>
-          {/* 뒤로가기 버튼 (작게) */}
-          <button className="back-btn noto-sans-kr" onClick={handleGoBack}>
-            뒤로가기
-          </button>
-        </div>
+        )}
       </div>
-    </div>
+      {/* 뒤로가기 버튼 (작게) */}
+      <button className="back-btn noto-sans-kr" onClick={handleGoBack}>
+        뒤로가기
+      </button>
+    </PhoneFrame>
   );
 }
 
