@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import { useCookies } from "react-cookie";
 import "./Main.css";  // App.css → Main.css 로 변경
+import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function Main() {
   const navigate = useNavigate();
@@ -42,28 +43,18 @@ function Main() {
   };
 
   return (
-    <div className="phone-container">
-      <div className="phone-frame">
-        <div className="notch"></div>
-        <div className="phone-screen">
-          <div className="logo-container">
-            <img
-              src="/images/olive_young_logo.png"
-              className="phone-logo"
-              alt="Olive Young Logo"
-            />
-          </div>
-          <div className="center-content">
-            <button
-              className="reserve-btn noto-sans-kr"
-              onClick={handleButtonClick}
-            >
-              반짝 예매
-            </button>
-          </div>
-        </div>
+    <PhoneFrame>
+      <div className="logo-container">
       </div>
-    </div>
+      <div className="center-content">
+        <button
+          className="reserve-btn noto-sans-kr"
+          onClick={handleButtonClick}
+        >
+          반짝 예매
+        </button>
+      </div>
+    </PhoneFrame>
   );
 }
 

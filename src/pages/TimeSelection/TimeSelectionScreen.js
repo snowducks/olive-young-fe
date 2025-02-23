@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Main/Main.css";
 import "./TimeSelectionScreen.css";
+import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function TimeSelectionScreen() {
   const navigate = useNavigate();
@@ -120,47 +121,42 @@ function TimeSelectionScreen() {
   };
 
   return (
-    <div className="phone-container">
-      <div className="phone-frame">
-        <div className="notch"></div>
-        <div className="phone-screen">
-          {/* 로고 영역 */}
-          <div className="logo-container">
-            <img
-              src="/images/olive_young_logo.png"
-              className="phone-logo"
-              alt="Olive Young Logo"
-            />
-          </div>
-
-          {/* 중앙 영역: 시간 선택 버튼 + 예매 완료 버튼 */}
-          <div className="center-content noto-sans-kr">
-            {/* 시간 버튼 목록 */}
-            <div style={{ maxHeight: "300px", overflowY: "auto", marginBottom: "20px", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }} >
-              {times.map((hour) => (
-                <button
-                key={hour}
-                className={`time-button ${selectedTime === hour ? "selected" : ""}`}
-                onClick={() => handleTimeClick(hour)}
-                disabled={availability[hour] === 0}
-              >
-                  {hour}
-                </button>
-              ))}
-            </div>
-
-            {/* 예매 완료 버튼 */}
-            <button
-              className="reserve-btn"
-              style={{ marginTop: "20px" }}
-              onClick={handleBooking}
-            >
-              예매 완료
-            </button>
-          </div>
-        </div>
+    <PhoneFrame>
+      {/* 로고 영역 */}
+      <div className="logo-container">
+        <img
+          src="/images/olive_young_logo.png"
+          className="phone-logo"
+          alt="Olive Young Logo"
+        />
       </div>
-    </div>
+
+      {/* 중앙 영역: 시간 선택 버튼 + 예매 완료 버튼 */}
+      <div className="center-content noto-sans-kr">
+        {/* 시간 버튼 목록 */}
+        <div style={{ maxHeight: "300px", overflowY: "auto", marginBottom: "20px", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }} >
+          {times.map((hour) => (
+            <button
+            key={hour}
+            className={`time-button ${selectedTime === hour ? "selected" : ""}`}
+            onClick={() => handleTimeClick(hour)}
+            disabled={availability[hour] === 0}
+          >
+              {hour}
+            </button>
+          ))}
+        </div>
+
+        {/* 예매 완료 버튼 */}
+        <button
+          className="reserve-btn"
+          style={{ marginTop: "20px" }}
+          onClick={handleBooking}
+        >
+          예매 완료
+        </button>
+      </div>
+    </PhoneFrame>
   );
 }
 
