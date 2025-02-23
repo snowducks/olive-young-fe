@@ -27,55 +27,6 @@ html, body, #root {
   height: 100vh;
 }
 
-.phone-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 300px;  /* 휴대폰 가로 크기 */
-  height: 600px; /* 휴대폰 세로 크기 */
-  position: relative;
-}
-
-.phone-frame {
-  width: 100%;
-  height: 100%;
-  background-color: #000;    /* 폰 외곽 검정색 */
-  border-radius: 40px;
-  position: relative;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 30px;
-  background-color: #000;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  z-index: 2;
-  margin-top: 5px;
-}
-
-.phone-screen {
-  position: absolute;
-  top: 8px;  /* 노치 아래로 공간 */
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
-  background-color: #FFFFFF; /* 아이보리색 */
-  border-radius: 30px;
-  overflow: hidden;
-
-  /* 화면 내부 콘텐츠 중앙 정렬 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 /* 로고 */
 .phone-logo {
   width: 180px; /* 로고 크기 */

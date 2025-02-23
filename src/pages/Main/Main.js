@@ -45,11 +45,6 @@ function Main() {
   return (
     <PhoneFrame>
       <div className="logo-container">
-        <img
-          src="/images/olive_young_logo.png"
-          className="phone-logo"
-          alt="Olive Young Logo"
-        />
       </div>
       <div className="center-content">
         <button
