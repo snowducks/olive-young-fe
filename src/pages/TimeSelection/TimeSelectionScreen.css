@@ -1,0 +1,15 @@
+
+/* 시간 선택 버튼 기본 스타일 */
+.time-button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  /* 선택된 버튼 스타일 (border 두께를 늘림) */
+  .time-button.selected {
+    border: 2px solid #333;
+  }

@@ -1,0 +1,17 @@
+/* 뒤로가기 버튼 */
+.back-btn {
+    margin-bottom: 16px;   /* 혹은 위치 조절 */
+    padding: 8px 16px;     /* 작게 조절 */
+    font-size: 0.8rem;     /* 폰트 크기 축소 */
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .back-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
