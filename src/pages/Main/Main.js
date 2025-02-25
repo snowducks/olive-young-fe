@@ -19,6 +19,14 @@ function Main() {
   const minute = String(date.getMinutes()).padStart(2, "0");
   const second = String(date.getSeconds()).padStart(2, "0");
   const formattedDate = `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+  
+  // 쿠키가 업데이트되었을 때 navigate 호출
+  useEffect(() => {
+    if (cookies.uuid && !hasNavigated) {
+      setHasNavigated(true);
+      navigate("/waiting");
+    }
+  }, [cookies, hasNavigated, navigate]);
 
   const handleButtonClick = async () => {
     try {
@@ -33,7 +41,7 @@ function Main() {
 
       if (response.ok) {
         console.log("uuid cookie : ", cookies.uuid);
-        navigate("/waiting");
+        // 쿠키가 설정되면 useEffect에서 navigate가 호출됩니다.
       } else {
         console.error("Failed to send request");
       }

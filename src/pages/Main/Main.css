@@ -27,12 +27,6 @@ html, body, #root {
   height: 100vh;
 }
 
-/* 로고 */
-.phone-logo {
-  width: 180px; /* 로고 크기 */
-  margin-bottom: 30px;
-}
-
 /* 버튼 스타일 */
 .reserve-btn {
   padding: 16px 32px;
@@ -40,7 +34,7 @@ html, body, #root {
   color: #333;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 15px;
   cursor: pointer;
 }
 
