@@ -6,6 +6,7 @@ import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function WaitingScreen() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [waitingCount, setWaitingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   
