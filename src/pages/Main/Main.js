@@ -5,7 +5,6 @@ import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function Main() {
   const navigate = useNavigate();
-  const { uuid } = location.state || {};
 
   // const API_URL = process.env.REACT_APP_API_URL;
 
