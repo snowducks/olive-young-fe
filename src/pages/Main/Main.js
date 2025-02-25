@@ -48,7 +48,22 @@ function Main() {
 
   return (
     <PhoneFrame>
+      {/* 상단 섹션: olive_youg_Top 이미지를 보여줄 영역 */}
+      <div className="top-section">
+        <img
+          src="/images/oliveTopBar.png"
+          alt="Top Banner"
+          className="top-image"
+        />
+      </div>
+
+      {/* 메인 섹션: olivePopup 이미지를 꽉 채우고 버튼 올리기 */}
       <div className="center-content">
+        <img 
+          src="/images/olivePopup.png"
+          alt="Phone content"
+          className="phone-image"
+        />
         <button
           className="reserve-btn noto-sans-kr"
           onClick={handleButtonClick}

@@ -21,21 +21,27 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+
     width: 120px;
     height: 30px;
     background-color: #000;
+    
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    
     z-index: 2;
-    margin-top: 5px;
+    
+    margin-top: 2px;
   }
   
   .phone-screen {
     position: absolute;
+
     top: 8px;
     left: 8px;
     right: 8px;
     bottom: 8px;
+    
     background-color: #FFFFFF;
     border-radius: 30px;
     overflow: hidden;
