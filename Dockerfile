@@ -14,8 +14,8 @@ RUN npm install
 
 
 # WebSocket 서버 주소
-ENV REACT_APP_API_URL = http://localhost:8083
-ENV REACT_APP_WS_URL = ws://localhost:8084
+ENV REACT_APP_API_URL=http://kafka-producer.back.svc.cluster.local:8080
+ENV REACT_APP_WS_URL=ws://websocket-server.back.svc.cluster.local:8080
 
 # 호스트 머신의 현재 디렉토리 파일들을 컨테이너 내부로 전부 복사
 COPY . .
