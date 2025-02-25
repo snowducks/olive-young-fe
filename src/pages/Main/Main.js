@@ -30,7 +30,8 @@ function Main() {
       });
 
       if (response.ok) {
-        const uuid = await response.text();
+        const data = await response.json();
+        const uuid = data.body.uuid;
 
         if (uuid) {
           console.log("received uuid : ", uuid);
@@ -38,7 +39,6 @@ function Main() {
         } else {
           console.error("UUID가 API 응답에 없습니다.");
         }
-        // 쿠키가 설정되면 useEffect에서 navigate가 호출됩니다.
       } else {
         console.error("Failed to send request");
       }
