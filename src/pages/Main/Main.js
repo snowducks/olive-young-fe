@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import { useCookies } from "react-cookie";
 import "./Main.css";
@@ -7,7 +7,6 @@ import PhoneFrame from "../../components/organisms/PhoneFrame";
 function Main() {
   const navigate = useNavigate();
   const [cookies] = useCookies(["uuid"]);
-  const [hasNavigated, setHasNavigated] = useState(false);
 
   // const API_URL = process.env.REACT_APP_API_URL;
 
@@ -21,14 +20,6 @@ function Main() {
   const second = String(date.getSeconds()).padStart(2, "0");
   const formattedDate = `${year}-${month}-${day}T${hour}:${minute}:${second}`;
   
-  // 쿠키가 업데이트되었을 때 navigate 호출
-  useEffect(() => {
-    if (cookies.uuid && !hasNavigated) {
-      setHasNavigated(true);
-      navigate("/waiting");
-    }
-  }, [cookies, hasNavigated, navigate]);
-
   const handleButtonClick = async () => {
     try {
       const response = await fetch(`/api/tickets/request`, {
@@ -41,7 +32,11 @@ function Main() {
       });
 
       if (response.ok) {
-        console.log("uuid cookie : ", cookies.uuid);
+        if (cookies.uuid) {
+          console.log("uuid cookie : ", cookies.uuid);
+          navigate("/waiting");
+        }
+        
         // 쿠키가 설정되면 useEffect에서 navigate가 호출됩니다.
       } else {
         console.error("Failed to send request");
