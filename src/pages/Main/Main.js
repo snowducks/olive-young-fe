@@ -31,7 +31,7 @@ function Main() {
 
       if (response.ok) {
         const data = await response.json();
-        const uuid = data.body.uuid;
+        const uuid = data.uuid;
 
         if (uuid) {
           console.log("received uuid : ", uuid);
