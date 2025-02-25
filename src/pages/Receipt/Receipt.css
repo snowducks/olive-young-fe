@@ -1,0 +1,16 @@
+/* 버튼 스타일 */
+.goback-btn {
+    padding: 16px 32px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    cursor: pointer;
+  
+    /* 이미지를 덮도록 절대 위치 지정 */
+    position: absolute;
+    bottom: 30px; /* 원하는 위치에 맞게 조절 */
+    left: 50%;
+    transform: translateX(-50%);
+  }

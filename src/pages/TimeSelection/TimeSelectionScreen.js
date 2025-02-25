@@ -124,7 +124,7 @@ function TimeSelectionScreen() {
       {/* 중앙 영역: 시간 선택 버튼 + 예매 완료 버튼 */}
       <div className="center-content noto-sans-kr">
         {/* 시간 버튼 목록 */}
-        <div style={{ maxHeight: "300px", overflowY: "auto", marginBottom: "20px", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }} >
+        <div className="scrollable-grid" >
           {times.map((hour) => (
             <button
             key={hour}
@@ -139,7 +139,7 @@ function TimeSelectionScreen() {
 
         {/* 예매 완료 버튼 */}
         <button
-          className="reserve-btn"
+          className="reserv-btn"
           style={{ marginTop: "20px" }}
           onClick={handleBooking}
         >

@@ -1,6 +1,7 @@
 // src/Receipt.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./Receipt.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function Receipt() {
@@ -17,7 +18,7 @@ function Receipt() {
         <h2>예매가 완료되었습니다!</h2>
       </div>
       <button
-        className="reserve-btn"
+        className="goback-btn"
         style={{ marginTop: "20px" }}
         onClick={handleGoHome}
       >

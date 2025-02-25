@@ -65,7 +65,7 @@ function Main() {
           className="phone-image"
         />
         <button
-          className="reserve-btn noto-sans-kr"
+          className="reserve-start-btn noto-sans-kr"
           onClick={handleButtonClick}
         >
           반짝 예매
