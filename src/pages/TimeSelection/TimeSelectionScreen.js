@@ -6,6 +6,7 @@ import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function TimeSelectionScreen() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedTime, setSelectedTime] = useState(null);
   const [availability, setAvailability] = useState({});
 
@@ -32,7 +33,7 @@ function TimeSelectionScreen() {
 
       // 주기적으로 
       intervalRef.current = setInterval(() => {
-        if (ws.current.readyState === WebSocket.OPEN) {
+        if (ws.current.readyState === WebSocket.OPEN) { 
           ws.current.send("ALL_TIMESLOTS");
         }
       }, 1000); // 1초 간격
