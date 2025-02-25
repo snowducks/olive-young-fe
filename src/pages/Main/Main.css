@@ -17,9 +17,6 @@ html, body, #root {
   font-style: normal;
 }
 
-/* ------------------------
-   휴대폰 모형 기본
-------------------------- */
 #root {
   display: flex;
   align-items: center;
@@ -41,3 +38,4 @@ html, body, #root {
 .reserve-btn:hover {
   background-color: #f0f0f0;
 }
+
