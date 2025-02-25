@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import "../Main/Main.css";
 import "./WaitingScreen.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
@@ -17,8 +16,8 @@ function WaitingScreen() {
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    const wsUrl = process.env.REACT_APP_WS_URL;
-    ws.current = new WebSocket(`${wsUrl}/websocket/queue`);
+    // const wsUrl = process.env.REACT_APP_WS_URL;
+    ws.current = new WebSocket(`/ws/websocket/queue`);
 
     ws.current.onopen = () => {
       console.log("WebSocket 연결됨");

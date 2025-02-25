@@ -1,7 +1,6 @@
 // src/TimeSelectionScreen.js
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "../Main/Main.css";
 import "./TimeSelectionScreen.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
@@ -12,7 +11,7 @@ function TimeSelectionScreen() {
 
   const ws = useRef(null);
   const intervalRef = useRef(null); // interval 관리를 위한 ref 추가
-  const API_URL = process.env.REACT_APP_API_URL;
+  // const API_URL = process.env.REACT_APP_API_URL;
 
   const times = [
     "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
@@ -22,8 +21,8 @@ function TimeSelectionScreen() {
 
   // WebSocket 연결 설정
   useEffect(() => {
-    const wsUrl = process.env.REACT_APP_WS_URL;
-    ws.current = new WebSocket(`${wsUrl}/websocket/tickets`);
+    // const wsUrl = process.env.REACT_APP_WS_URL;
+    ws.current = new WebSocket(`ws/websocket/tickets`);
 
     ws.current.onopen = () => {
       console.log("WebSocket 연결됨");
@@ -92,7 +91,7 @@ function TimeSelectionScreen() {
       console.log("WebSocket 종료됨");
     }
 
-    fetch(`${API_URL}/tickets/booking`, {
+    fetch(`/api/tickets/booking`, {
       method: 'POST',
       credentials: 'include',
       headers: {

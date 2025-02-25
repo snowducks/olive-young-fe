@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import { useCookies } from "react-cookie";
-import "./Main.css";  // App.css → Main.css 로 변경
+import "./Main.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function Main() {
   const navigate = useNavigate();
   const [cookies] = useCookies(["uuid"]);
 
-  const API_URL = process.env.REACT_APP_API_URL;
+  // const API_URL = process.env.REACT_APP_API_URL;
 
   // 날짜/시간 포맷팅
   const date = new Date();
@@ -22,7 +22,7 @@ function Main() {
 
   const handleButtonClick = async () => {
     try {
-      const response = await fetch(`${API_URL}/tickets/request`, {
+      const response = await fetch(`/api/tickets/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

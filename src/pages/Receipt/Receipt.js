@@ -1,7 +1,6 @@
 // src/Receipt.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../Main/Main.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function Receipt() {
