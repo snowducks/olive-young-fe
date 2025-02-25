@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { useCookies } from "react-cookie";
 import "./Main.css";
@@ -7,6 +7,7 @@ import PhoneFrame from "../../components/organisms/PhoneFrame";
 function Main() {
   const navigate = useNavigate();
   const [cookies] = useCookies(["uuid"]);
+  const [hasNavigated, setHasNavigated] = useState(false);
 
   // const API_URL = process.env.REACT_APP_API_URL;
 
