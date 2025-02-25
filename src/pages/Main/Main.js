@@ -30,8 +30,7 @@ function Main() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        const uuid = data.uuid;
+        const uuid = await response.text();
 
         if (uuid) {
           console.log("received uuid : ", uuid);
