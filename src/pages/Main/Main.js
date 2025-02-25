@@ -1,12 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; 
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import "./Main.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
 function Main() {
   const navigate = useNavigate();
-  const [cookies] = useCookies(["uuid"]);
 
   // const API_URL = process.env.REACT_APP_API_URL;
 
@@ -28,15 +26,19 @@ function Main() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ timestamp: formattedDate, eventId: 1 }), 
-        credentials: "include", // 쿠키를 포함하여 요청
+        credentials: "include",
       });
 
       if (response.ok) {
-        if (cookies.uuid) {
-          console.log("uuid cookie : ", cookies.uuid);
-          navigate("/waiting");
+        const data = await response.json();
+        const uuid = data.uuid;
+
+        if (uuid) {
+          console.log("received uuid : ", uuid);
+          navigate("/waiting", { state: { uuid } });
+        } else {
+          console.error("UUID가 API 응답에 없습니다.");
         }
-        
         // 쿠키가 설정되면 useEffect에서 navigate가 호출됩니다.
       } else {
         console.error("Failed to send request");
@@ -48,7 +50,6 @@ function Main() {
 
   return (
     <PhoneFrame>
-      {/* 상단 섹션: olive_youg_Top 이미지를 보여줄 영역 */}
       <div className="top-section">
         <img
           src="/images/oliveTopBar.png"
@@ -57,7 +58,6 @@ function Main() {
         />
       </div>
 
-      {/* 메인 섹션: olivePopup 이미지를 꽉 채우고 버튼 올리기 */}
       <div className="center-content">
         <img 
           src="/images/olivePopup.png"

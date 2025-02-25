@@ -1,7 +1,6 @@
 // src/WaitingScreen.js
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./WaitingScreen.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
@@ -9,9 +8,9 @@ function WaitingScreen() {
   const navigate = useNavigate();
   const [waitingCount, setWaitingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [cookies] = useCookies(['uuid']); // 쿠키 훅 사용
-
   
+  const { uuid } = location.state || {};
+
   const ws = useRef(null);
   const intervalRef = useRef(null);
 
@@ -21,12 +20,13 @@ function WaitingScreen() {
 
     ws.current.onopen = () => {
       console.log("WebSocket 연결됨");
+
       // 쿠키에 담긴 uuid 전송
-      console.log("uuid cookie : ", cookies.uuid);
-      if (cookies.uuid) {
+      console.log("uuid : ", uuid);
+      if (uuid) {
         intervalRef.current = setInterval(() => {
         if (ws.current.readyState === WebSocket.OPEN) {
-          ws.current.send(cookies.uuid);
+          ws.current.send(uuid);
         }
       }, 1000); // 1초 간격
       } else {
@@ -42,7 +42,7 @@ function WaitingScreen() {
         if (data.canEnter === true) {
           clearInterval(intervalRef.current);
           ws.current.close();
-          navigate("/time-selection");
+          navigate("/time-selection", { state: { uuid } });
         }
         // waitingOrder 값 업데이트
         if (data.waitingOrder !== undefined) {
@@ -62,7 +62,6 @@ function WaitingScreen() {
       console.log("WebSocket 연결 종료");
     };
 
-
     // ★ 중요: cleanup 함수
     return () => {
       // interval 정리
@@ -75,7 +74,7 @@ function WaitingScreen() {
         console.log("WebSocket 연결 종료");
       }
     };
-  }, [cookies.uuid, navigate]);
+  }, [uuid, navigate]);
 
   const handleGoBack = () => {
     navigate(-1);
