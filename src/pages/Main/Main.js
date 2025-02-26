@@ -35,7 +35,7 @@ function Main() {
 
         if (uuid) {
           console.log("received uuid : ", uuid);
-          navigate("/waiting", { state: { uuid, timestamp } });
+          navigate("/waiting", { state: { uuid, formattedDate } });
         } else {
           console.error("UUID가 API 응답에 없습니다.");
         }

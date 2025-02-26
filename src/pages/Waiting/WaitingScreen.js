@@ -10,7 +10,7 @@ function WaitingScreen() {
   const [waitingCount, setWaitingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   
-  const { uuid, timestamp } = location.state || {};
+  const { uuid, formattedDate } = location.state || {};
 
   const ws = useRef(null);
   const intervalRef = useRef(null);
@@ -44,7 +44,7 @@ function WaitingScreen() {
         if (data.canEnter === true) {
           clearInterval(intervalRef.current);
           ws.current.close();
-          navigate("/time-selection", { state: { uuid, timestamp } });
+          navigate("/time-selection", { state: { uuid, formattedDate } });
         }
         // waitingOrder 값 업데이트
         if (data.waitingOrder !== undefined) {
