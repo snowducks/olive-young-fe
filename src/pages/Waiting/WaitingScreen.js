@@ -1,6 +1,6 @@
 // src/WaitingScreen.js
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./WaitingScreen.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
@@ -10,7 +10,7 @@ function WaitingScreen() {
   const [waitingCount, setWaitingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   
-  const { uuid, formattedDate } = location.state || {};
+  const { uuid } = location.state || {};
 
   const ws = useRef(null);
   const intervalRef = useRef(null);
@@ -44,7 +44,7 @@ function WaitingScreen() {
         if (data.canEnter === true) {
           clearInterval(intervalRef.current);
           ws.current.close();
-          navigate("/time-selection", { state: { uuid, formattedDate } });
+          navigate("/time-selection", { state: { uuid } });
         }
         // waitingOrder 값 업데이트
         if (data.waitingOrder !== undefined) {
@@ -76,7 +76,7 @@ function WaitingScreen() {
         console.log("WebSocket 연결 종료");
       }
     };
-  }, [uuid, formattedDate, navigate]);
+  }, [uuid, navigate]);
 
   const handleGoBack = () => {
     navigate(-1);

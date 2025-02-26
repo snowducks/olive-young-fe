@@ -1,6 +1,6 @@
 // src/TimeSelectionScreen.js
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./TimeSelectionScreen.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
@@ -19,7 +19,7 @@ function TimeSelectionScreen() {
     "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
     "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"
   ];
-  const { uuid, formattedDate } = location.state || {};
+  const { uuid } = location.state || {};
 
   // WebSocket 연결 설정
   useEffect(() => {
@@ -100,7 +100,7 @@ function TimeSelectionScreen() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ 
-        timestamp: formattedDate, 
+        timestamp: new Date(), 
         eventId: 1, 
         timeSlot: selectedTime,
         uuid: uuid,
