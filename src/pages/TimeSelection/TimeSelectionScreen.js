@@ -132,8 +132,8 @@ function TimeSelectionScreen() {
             <button
             key={hour}
             className={`time-button ${selectedTime === hour ? "selected" : ""}`}
-            onClick={() => handleTimeClick(hour)}
-            disabled={availability[hour] <= 0}
+            onClick={() => availability[hour] > 0 && handleTimeClick(hour)}
+            disabled={availability[hour] > 0 ? false : true}
           >
               {hour}
             </button>
