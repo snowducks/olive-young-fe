@@ -76,7 +76,7 @@ function WaitingScreen() {
         console.log("WebSocket 연결 종료");
       }
     };
-  }, [uuid, navigate]);
+  }, [uuid, formattedDate, navigate]);
 
   const handleGoBack = () => {
     navigate(-1);
