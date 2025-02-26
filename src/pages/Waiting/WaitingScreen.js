@@ -39,6 +39,7 @@ function WaitingScreen() {
       console.log("서버로부터 메시지 수신:", event.data);
       try {
         const data = JSON.parse(event.data);
+
         // 입장 가능 여부가 true이면 해당 경로로 이동
         if (data.canEnter === true) {
           clearInterval(intervalRef.current);
@@ -92,8 +93,11 @@ function WaitingScreen() {
             {waitingCount}명이 대기중입니다.
           </div>
         )}
+        {/* 숨겨진 요소로 canEnter 값을 노출 */}
+        <div id="canEnterIndicator" style={{ display: "none" }}>
+          {window.canEnter ? "true" : "false"}
+        </div>
       </div>
-      {/* 뒤로가기 버튼 (작게) */}
       <button className="back-btn noto-sans-kr" onClick={handleGoBack}>
         뒤로가기
       </button>
