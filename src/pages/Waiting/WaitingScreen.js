@@ -1,6 +1,6 @@
 // src/WaitingScreen.js
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./WaitingScreen.css";
 import PhoneFrame from "../../components/organisms/PhoneFrame";
 
